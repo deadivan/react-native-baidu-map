@@ -13,7 +13,7 @@
 #import <BaiduMapAPI_Location/BMKLocationService.h>
 
 #import "BaseModule.h"
-#import <React/RCTBaiduMapViewManager.h>
+#import "RCTBaiduMapViewManager.h"
 
 @interface GeolocationModule : BaseModule <BMKGeoCodeSearchDelegate> {
 }
