@@ -26,6 +26,8 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
 }
 
 
+
+
 +(void)initSDK:(NSString*)key {
     
     BMKMapManager* _mapManager = [[BMKMapManager alloc]init];
@@ -33,6 +35,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
     if (!ret) {
         NSLog(@"manager start failed!");
     }
+
 }
 
 - (UIView *)view {
@@ -68,6 +71,11 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
 }
 
 -(void)mapViewDidFinishLoading:(BMKMapView *)mapView {
+    mapView.buildingsEnabled =NO;
+    mapView.rotateEnabled =NO;
+    mapView.zoomEnabled =YES;
+    mapView.overlookEnabled=YES;
+    mapView.overlooking = -45;
     NSDictionary* event = @{
                             @"type": @"onMapLoaded",
                             @"params": @{}
@@ -107,9 +115,17 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
 
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation {
     if ([annotation isKindOfClass:[BMKPointAnnotation class]]) {
+        
         BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"myAnnotation"];
         newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
         newAnnotationView.animatesDrop = YES;
+        newAnnotationView.canShowCallout = NO;
+        newAnnotationView.image = [UIImage imageNamed:@"icon_red_shopping.png"];
+        UILabel * labelNo = [[UILabel alloc]initWithFrame:CGRectMake(30, 0, 120, 30)];
+        labelNo.text =[NSString stringWithFormat:@"%@",annotation.title];
+        labelNo.textColor = [UIColor whiteColor];
+        labelNo.backgroundColor = [UIColor clearColor];
+        [newAnnotationView addSubview:labelNo];
         return newAnnotationView;
     }
     return nil;

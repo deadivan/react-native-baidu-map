@@ -30,6 +30,19 @@
     if(option != nil) {
         if(_annotation == nil) {
             _annotation = [[BMKPointAnnotation alloc]init];
+            
+            BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:_annotation reuseIdentifier:@"myAnnotation"];
+            newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
+            newAnnotationView.animatesDrop = YES;
+            newAnnotationView.canShowCallout = NO;
+            newAnnotationView.image = [UIImage imageNamed:@"icon_red_shopping.png"];   //把大头针换成别的图片
+            UILabel * labelNo = [[UILabel alloc]initWithFrame:CGRectMake(30, 0, 120, 30)];
+            labelNo.text =[NSString stringWithFormat:@"首农延庆农场"];
+            labelNo.textColor = [UIColor whiteColor];
+            labelNo.backgroundColor = [UIColor clearColor];
+            [newAnnotationView addSubview:labelNo];
+
+            
             [self addMarker:_annotation option:option];
         }
         else {
@@ -48,11 +61,14 @@
             NSDictionary *option = [markers objectAtIndex:i];
             
             BMKPointAnnotation *annotation = nil;
+        
+            
             if(i < [_annotations count]) {
                 annotation = [_annotations objectAtIndex:i];
             }
             if(annotation == nil) {
                 annotation = [[BMKPointAnnotation alloc]init];
+                
                 [self addMarker:annotation option:option];
                 [_annotations addObject:annotation];
             }
@@ -101,6 +117,8 @@
     if(title.length == 0) {
         title = nil;
     }
+    
+    BMKPointAnnotation *annotation1=[[BMKPointAnnotation alloc]init];annotation1.title=@"利川";
     annotation.coordinate = coor;
     annotation.title = title;
 }

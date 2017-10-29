@@ -52,10 +52,20 @@ RCT_EXPORT_METHOD(geocode:(NSString *)city addr:(NSString *)addr) {
     }
 }
 
+
 RCT_EXPORT_METHOD(reverseGeoCode:(double)lat lng:(double)lng) {
     
     [self getGeocodesearch].delegate = self;
     CLLocationCoordinate2D baiduCoor = CLLocationCoordinate2DMake(lat, lng);
+    
+//    //判断是否在中国
+//    if (![TQLocationConverter isLocationOutOfChina:baiduCoor])
+//    {
+//        //将WGS-84转为GCJ-02(火星坐标)
+//        baiduCoor = [TQLocationConverter transformFromWGSToGCJ:baiduCoor];
+//        NSLog(@"123456789======%f,%f",baiduCoor.latitude,baiduCoor.longitude);
+//        
+//    }
     
     CLLocationCoordinate2D pt = (CLLocationCoordinate2D){baiduCoor.latitude, baiduCoor.longitude};
     
@@ -70,6 +80,15 @@ RCT_EXPORT_METHOD(reverseGeoCode:(double)lat lng:(double)lng) {
     //[reverseGeoCodeSearchOption release];
 }
 
+RCT_EXPORT_METHOD(getDistance:(double)lat1 lng1:(double)lng1 lat2:(double)lat2 lng2:(double)lng2 ){
+    
+    BMKMapPoint point1 = BMKMapPointForCoordinate(CLLocationCoordinate2DMake(lat1,lng1));
+    BMKMapPoint point2 = BMKMapPointForCoordinate(CLLocationCoordinate2DMake(lat2,lng2));
+    CLLocationDistance distance = BMKMetersBetweenMapPoints(point1,point2);
+    
+    [self.bridge.eventDispatcher sendAppEventWithName:@"getDistanceResult" body:@{@"distance":[NSString stringWithFormat:@"%f",distance]}];
+    
+}
 RCT_EXPORT_METHOD(reverseGeoCodeGPS:(double)lat lng:(double)lng) {
     
     [self getGeocodesearch].delegate = self;
