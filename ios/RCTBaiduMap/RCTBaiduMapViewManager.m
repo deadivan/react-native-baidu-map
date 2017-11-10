@@ -85,6 +85,7 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
 
 -(void)mapView:(BMKMapView *)mapView
 didSelectAnnotationView:(BMKAnnotationView *)view {
+   
     NSDictionary* event = @{
                             @"type": @"onMarkerClick",
                             @"params": @{
@@ -96,6 +97,8 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
                                     }
                             };
     [self sendEvent:mapView params:event];
+    
+    [view setSelected:NO];
 }
 
 - (void) mapView:(BMKMapView *)mapView
@@ -117,16 +120,17 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
     if ([annotation isKindOfClass:[BMKPointAnnotation class]]) {
         
         BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"myAnnotation"];
-        newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
-        newAnnotationView.animatesDrop = YES;
-        newAnnotationView.canShowCallout = NO;
-        newAnnotationView.image = [UIImage imageNamed:@"icon_red_shopping.png"];
-        UILabel * labelNo = [[UILabel alloc]initWithFrame:CGRectMake(30, 0, 120, 30)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+        newAnnotationView.paopaoView = [[BMKActionPaopaoView alloc] initWithCustomView:view];
+        newAnnotationView.image = [UIImage imageNamed:@"icon_pin.png"];
+        UILabel * labelNo = [[UILabel alloc]initWithFrame:CGRectMake(30, -2, 200, 30)];
         labelNo.text =[NSString stringWithFormat:@"%@",annotation.title];
         labelNo.textColor = [UIColor whiteColor];
         labelNo.backgroundColor = [UIColor clearColor];
+        
         [newAnnotationView addSubview:labelNo];
         return newAnnotationView;
+        
     }
     return nil;
 }
@@ -153,6 +157,16 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
         return;
     }
     mapView.onChange(params);
+}
+
+-(void)myAnnotationPressed:(UIButton *)btn
+{
+    NSLog(@"aaaaa");
+}
+
+-(void)myAnnotationPressedMapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation
+{
+    
 }
 
 @end

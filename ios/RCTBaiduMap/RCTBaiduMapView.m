@@ -35,7 +35,7 @@
             newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
             newAnnotationView.animatesDrop = YES;
             newAnnotationView.canShowCallout = NO;
-            newAnnotationView.image = [UIImage imageNamed:@"icon_red_shopping.png"];   //把大头针换成别的图片
+            newAnnotationView.image = [UIImage imageNamed:@"icon_pin.png"];   //把大头针换成别的图片
             UILabel * labelNo = [[UILabel alloc]initWithFrame:CGRectMake(30, 0, 120, 30)];
             labelNo.text =[NSString stringWithFormat:@"首农延庆农场"];
             labelNo.textColor = [UIColor whiteColor];
