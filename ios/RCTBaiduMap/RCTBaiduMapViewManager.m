@@ -29,7 +29,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, RCTBaiduMapView) {
 
 
 +(void)initSDK:(NSString*)key {
-    
+
     BMKMapManager* _mapManager = [[BMKMapManager alloc]init];
     BOOL ret = [_mapManager start:key  generalDelegate:nil];
     if (!ret) {
@@ -85,7 +85,7 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
 
 -(void)mapView:(BMKMapView *)mapView
 didSelectAnnotationView:(BMKAnnotationView *)view {
-   
+
     NSDictionary* event = @{
                             @"type": @"onMarkerClick",
                             @"params": @{
@@ -97,7 +97,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
                                     }
                             };
     [self sendEvent:mapView params:event];
-    
+
     [view setSelected:NO];
 }
 
@@ -118,19 +118,22 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
 
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation {
     if ([annotation isKindOfClass:[BMKPointAnnotation class]]) {
-        
+
         BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"myAnnotation"];
+        newAnnotationView.frame = CGRectMake(0, 0, 200, 30);
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
         newAnnotationView.paopaoView = [[BMKActionPaopaoView alloc] initWithCustomView:view];
-        newAnnotationView.image = [UIImage imageNamed:@"icon_pin.png"];
+
+        UIImage * image = [UIImage imageNamed:@"icon-pin-340.png"];
+        newAnnotationView.image = image;   //把大头针换成别的图片
         UILabel * labelNo = [[UILabel alloc]initWithFrame:CGRectMake(30, -2, 200, 30)];
         labelNo.text =[NSString stringWithFormat:@"%@",annotation.title];
         labelNo.textColor = [UIColor whiteColor];
         labelNo.backgroundColor = [UIColor clearColor];
-        
+
         [newAnnotationView addSubview:labelNo];
         return newAnnotationView;
-        
+
     }
     return nil;
 }
@@ -166,7 +169,7 @@ didSelectAnnotationView:(BMKAnnotationView *)view {
 
 -(void)myAnnotationPressedMapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation
 {
-    
+
 }
 
 @end
