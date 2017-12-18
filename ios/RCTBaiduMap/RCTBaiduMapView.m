@@ -118,7 +118,6 @@
         title = nil;
     }
     
-    BMKPointAnnotation *annotation1=[[BMKPointAnnotation alloc]init];annotation1.title=@"利川";
     annotation.coordinate = coor;
     annotation.title = title;
 }

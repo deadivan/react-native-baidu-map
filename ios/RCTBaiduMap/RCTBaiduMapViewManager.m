@@ -73,7 +73,7 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
 -(void)mapViewDidFinishLoading:(BMKMapView *)mapView {
     mapView.buildingsEnabled =NO;
     mapView.rotateEnabled =NO;
-    mapView.zoomEnabled =YES;
+    mapView.zoomEnabled =NO;
     mapView.overlookEnabled=YES;
     mapView.overlooking = -45;
     NSDictionary* event = @{
