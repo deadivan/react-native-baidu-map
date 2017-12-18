@@ -75,6 +75,7 @@ onClickedMapBlank:(CLLocationCoordinate2D)coordinate {
     mapView.rotateEnabled =NO;
     mapView.zoomEnabled =NO;
     mapView.overlookEnabled=YES;
+    mapView.zoomEnabledWithTap=NO;
     mapView.overlooking = -45;
     NSDictionary* event = @{
                             @"type": @"onMapLoaded",
